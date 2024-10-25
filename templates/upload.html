@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container">
+        <h1 class="text-center mt-5">Загрузить видео</h1>
+        <form action="/upload" method="POST" enctype="multipart/form-data" class="mt-4">
+            <div class="mb-3">
+                <label for="class_number" class="form-label">Выберите класс:</label>
+                <select class="form-select" id="class_number" name="class_number" required>
+                    <option value="8">8 класс</option>
+                    <option value="9">9 класс</option>
+                    <option value="10">10 класс</option>
+                    <option value="11">11 класс</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="file" class="form-label">Выберите видеофайл:</label>
+                <input type="file" class="form-control" id="file" name="file" accept="video/mp4" required>
+            </div>
+<!--            <div class="mb-3">-->
+<!--                <label for="file" class="form-label">Выберите превью:</label>-->
+<!--                <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="static/thumbnails/jpg" required>-->
+<!--            </div>-->
+            <button type="submit" class="btn btn-primary">Загрузить видео</button>
+        </form>
+    </div>
+{% endblock %}

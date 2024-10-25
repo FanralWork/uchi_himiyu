@@ -1,0 +1,27 @@
+body {
+    background-color: #f8f9fa; /* Цвет фона страницы */
+}
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.card-img-top {
+            object-fit: cover;
+            height: 200px; /* Высота изображения */
+            padding: 10px 30px;
+            box-sizing: border-box;
+}
+/* Вытягиваем текст и кнопку вниз, чтобы все карточки имели одинаковое положение кнопки */
+.card-body {
+    flex-grow: 1;
+}
+.card-title {
+    margin-bottom: auto; /* Отступы автоматически равные */
+}
+h1 {
+    font-size: 2.5rem; /* Уменьшенный размер шрифта для заголовка */
+    font-weight: bold; /* Жирное начертание */
+    text-transform: uppercase; /* Заглавные буквы */
+}
+.col-md-4{
+    cursor: pointer;;
+}
