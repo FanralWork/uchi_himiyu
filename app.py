@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, s
 import os
 import subprocess
 import create_thumbnails
+from urllib.parse import quote
 
 app = Flask(__name__)
 
@@ -64,7 +65,8 @@ def upload_video():
         if file and allowed_file(file.filename):
             class_folder = os.path.join(VIDEO_DIR, class_number)
             os.makedirs(class_folder, exist_ok=True)
-            video_path = os.path.join(class_folder, file.filename)
+            filename = quote(file.filename)
+            video_path = os.path.join(class_folder, filename)
             file.save(video_path)
 
         # Если пользователь выбрал автоматическое создание превью
