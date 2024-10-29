@@ -9,8 +9,8 @@ THUMBNAIL_DIR = 'static/thumbnails'
 # Функция для создания превью из середины видео
 def create_thumbnail(video_path, thumbnail_path):
     # Укажите полный путь к ffprobe
-    ffprobe_path = r"ffmpeg\bin\ffprobe.exe"
-    cmd_duration = f'"{ffprobe_path}" -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "{video_path}"'
+    # ffprobe_path = r"ffmpeg\bin\ffprobe.exe"
+    cmd_duration = f'ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "{video_path}"'
     result = subprocess.run(cmd_duration, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     # Проверяем, успешно ли выполнена команда

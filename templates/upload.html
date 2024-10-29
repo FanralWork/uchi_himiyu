@@ -16,11 +16,47 @@
                 <label for="file" class="form-label">Выберите видеофайл:</label>
                 <input type="file" class="form-control" id="file" name="file" accept="video/mp4" required>
             </div>
-<!--            <div class="mb-3">-->
-<!--                <label for="file" class="form-label">Выберите превью:</label>-->
-<!--                <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="static/thumbnails/jpg" required>-->
-<!--            </div>-->
+
+            <!-- Выбор между пользовательским превью и автоматическим -->
+            <div class="mb-3">
+                <label class="form-label">Выберите способ создания превью:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="thumbnail_option" id="auto_thumbnail" value="auto" checked>
+                    <label class="form-check-label" for="auto_thumbnail">Создать автоматически</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="thumbnail_option" id="manual_thumbnail" value="manual">
+                    <label class="form-check-label" for="manual_thumbnail">Загрузить своё превью</label>
+                </div>
+            </div>
+
+            <!-- Поле для загрузки пользовательского превью, по умолчанию скрыто -->
+            <div class="mb-3" id="thumbnail_input" style="display: none;">
+                <label for="thumbnail" class="form-label">Выберите превью:</label>
+                <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/jpeg">
+            </div>
+
             <button type="submit" class="btn btn-primary">Загрузить видео</button>
         </form>
     </div>
+
+    <script>
+        // Показать или скрыть поле для загрузки превью в зависимости от выбора пользователя
+        document.addEventListener('DOMContentLoaded', function () {
+            const autoThumbnail = document.getElementById('auto_thumbnail');
+            const manualThumbnail = document.getElementById('manual_thumbnail');
+            const thumbnailInput = document.getElementById('thumbnail_input');
+
+            autoThumbnail.addEventListener('change', toggleThumbnailInput);
+            manualThumbnail.addEventListener('change', toggleThumbnailInput);
+
+            function toggleThumbnailInput() {
+                if (manualThumbnail.checked) {
+                    thumbnailInput.style.display = 'block';
+                } else {
+                    thumbnailInput.style.display = 'none';
+                }
+            }
+        });
+    </script>
 {% endblock %}

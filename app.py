@@ -54,23 +54,36 @@ def play_video(class_number, video_name):
 # Маршрут для загрузки видео
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_video():
-    THUMBNAIL_DIR = 'static/thumbnails'
     if request.method == 'POST':
         class_number = request.form['class_number']
         file = request.files['file']
-        # thumbnail = request.files['thumbnail']
+        thumbnail_option = request.form['thumbnail_option']
+        thumbnail = request.files.get('thumbnail')
 
+        # Сохранение видеофайла
         if file and allowed_file(file.filename):
             class_folder = os.path.join(VIDEO_DIR, class_number)
-            if not os.path.exists(class_folder):
-                os.makedirs(class_folder)
+            os.makedirs(class_folder, exist_ok=True)
             video_path = os.path.join(class_folder, file.filename)
             file.save(video_path)
-            # Создаем превью для видео
+
+        # Если пользователь выбрал автоматическое создание превью
+        if thumbnail_option == 'auto':
             thumbnail_name = os.path.splitext(os.path.basename(video_path))[0] + ".jpg"
             thumbnail_path = os.path.join(THUMBNAIL_DIR, thumbnail_name)
             create_thumbnails.create_thumbnail(video_path, thumbnail_path)
-            return render_template('index.html')
+        elif thumbnail_option == 'manual' and thumbnail and allowed_file(thumbnail.filename):
+            # Пользователь выбрал загрузить своё превью
+            thumbnail_name = os.path.splitext(file.filename)[0] + ".jpg"
+            thumbnail_path = os.path.join(THUMBNAIL_DIR, thumbnail_name)
+            print(thumbnail_name, thumbnail_path)
+            thumbnail.save(thumbnail_path)
+        else:
+            thumbnail_name = os.path.splitext(os.path.basename(video_path))[0] + ".jpg"
+            thumbnail_path = os.path.join(THUMBNAIL_DIR, thumbnail_name)
+            create_thumbnails.create_thumbnail(video_path, thumbnail_path)
+
+        return redirect(url_for('index'))
 
     return render_template('upload.html')
 
